@@ -14,6 +14,18 @@ ln -sf /Library/Printers/RWTS/PDFwriter/pdfwriter /usr/libexec/cups/backend/pdfw
 chgrp admin /Library/Printers/RWTS/PDFwriter/uninstall.sh
 chmod 750 /Library/Printers/RWTS/PDFwriter/uninstall.sh
 
+# add folder action
+for filename in /Library/Printers/RWTS/PDFwriter/"Folder Actions"/"Folder Action Scripts"/*.scpt; do
+  ln -sf "$filename" /Library/Scripts/"Folder Action Scripts"
+done
+if [ ! -d "/var/spool/pdfwriter" ]; then
+    mkdir /var/spool/pdfwriter
+fi
+INSTALLER_USER=$(stat -f '%Su' $HOME)
+if [ ! -z "$INSTALLER_USER" ]; then
+  sudo -u $INSTALLER_USER osascript /Library/Printers/RWTS/PDFwriter/"Folder Actions"/Install.scpt
+fi
+
 # restart cupsd
 launchctl unload /System/Library/LaunchDaemons/org.cups.cupsd.plist
 launchctl load /System/Library/LaunchDaemons/org.cups.cupsd.plist

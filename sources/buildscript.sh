@@ -38,6 +38,7 @@ echo "#### populating directory structure"
 iconutil -c icns -o $PDFWRITERDIR/PDFwriter.icns PDFwriter.iconset
 clang -Oz -o $PDFWRITERDIR/pdfwriter -framework appkit -arch x86_64 -fobjc-arc  -mmacosx-version-min=10.9 pdfwriter.m
 cp uninstall.sh PDFfolder.png $PDFWRITERDIR/
+cp -R "Folder Actions" $PDFWRITERDIR/
 gzip -c "$PPDFILE".ppd > $PPDDIR/"$PPDFILE".gz
 ln -s  /var/spool/pdfwriter pkgroot/Users/Shared/PDFwriter
 
